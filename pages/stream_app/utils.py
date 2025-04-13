@@ -1,6 +1,9 @@
 import re
 from datetime import datetime
 from typing import List, Union
+from datetime import datetime
+from zoneinfo import ZoneInfo
+# from pathlib import Path
 
 import streamlit as st
 from loguru import logger
@@ -14,6 +17,33 @@ from open_notebook.utils import (
     get_installed_version,
     get_version_from_github,
 )
+
+# custom css
+# def load_css():
+#     css_path = Path(__file__).parent / "styles.css"
+#     with open(css_path) as f:
+#         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+def convert_to_vn_time(utc_dt: datetime) -> str:
+    vn_dt = utc_dt.astimezone(ZoneInfo("Asia/Ho_Chi_Minh"))
+    return vn_dt.strftime("%H:%M - %d/%m/%Y")
+
+def hide_header_and_padding():
+    """
+    Hides the header and removes padding from the sides of the Streamlit app.
+    """
+    st.markdown(
+        """
+        <style>
+            .block-container {
+                padding-top: 0rem;
+                padding-bottom: 2rem;
+            }   
+            header {visibility: hidden;}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def version_sidebar():
@@ -155,16 +185,17 @@ def setup_page(
     sidebar_state="expanded",
     only_check_mandatory_models=True,
     stop_on_model_error=True,
+    icon = "📒",
 ):
     """Common page setup for all pages"""
     st.set_page_config(
-        page_title=title, layout=layout, initial_sidebar_state=sidebar_state
+        page_title=title, layout=layout, initial_sidebar_state=sidebar_state, page_icon=icon
     )
     check_migration()
     check_models(
         only_mandatory=only_check_mandatory_models, stop_on_error=stop_on_model_error
     )
-    version_sidebar()
+    # version_sidebar()
 
 
 def convert_source_references(text):
