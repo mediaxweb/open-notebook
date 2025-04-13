@@ -17,10 +17,10 @@ def source_panel(source_id: str, notebook_id=None, modal=False):
     if not source:
         raise ValueError(f"Source not found: {source_id}")
 
-    current_title = source.title if source.title else "No Title"
-    source.title = st.text_input("Title", value=current_title)
+    current_title = source.title if source.title else "Không có tiêu đề"
+    source.title = st.text_input("Tiêu đề", value=current_title)
     if source.title != current_title:
-        st.toast("Saved new Title")
+        st.toast("Cập nhật thành công!")
         source.save()
 
     process_tab, source_tab = st.tabs(["Process", "Source"])

@@ -9,6 +9,8 @@ from open_notebook.graphs.prompt import graph as prompt_graph
 from open_notebook.utils import surreal_clean
 from pages.components import note_panel
 
+from pages.stream_app.utils import convert_to_vn_time
+
 from .consts import note_context_icons
 
 
@@ -65,9 +67,9 @@ def note_card(note, notebook_id):
             index=1,
             key=f"note_{note.id}",
         )
-        st.caption(f"Updated: {naturaltime(note.updated)}")
+        st.caption(f"Ngày tạo: {convert_to_vn_time(note.updated)}")
 
-        if st.button("Expand", icon="📝", key=f"edit_note_{note.id}"):
+        if st.button("Xem chi tiết", icon="📝", key=f"edit_note_{note.id}"):
             note_panel_dialog(notebook_id=notebook_id, note=note)
 
     st.session_state[notebook_id]["context_config"][note.id] = context_state
