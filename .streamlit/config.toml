@@ -6,6 +6,13 @@ maxMessageSize = 500
 [browser]
 serverPort = 8502
 
+[client]
+showSidebarNavigation = false
+toolbarMode = "minimal"
+
+[ui]
+hideTopBar = true
+
 # [theme]
 
 # # The preset Streamlit theme that your custom theme inherits from.
@@ -27,4 +34,5 @@ serverPort = 8502
 # # Font family for all text in the app, except code blocks. One of "sans serif",
 # # "serif", or "monospace".
 # font =
+
 
