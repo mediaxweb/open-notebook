@@ -3,9 +3,10 @@ import streamlit as st
 from open_notebook.domain.transformation import DefaultPrompts, Transformation
 from open_notebook.graphs.transformation import graph as transformation_graph
 from pages.components.model_selector import model_selector
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 setup_page("🧩 Transformations")
+hide_header_and_padding()
 
 transformations_tab, playground_tab = st.tabs(["🧩 Transformations", "🛝 Playground"])
 

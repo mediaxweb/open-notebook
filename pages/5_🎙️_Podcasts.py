@@ -12,9 +12,11 @@ from open_notebook.plugins.podcasts import (
     engagement_techniques,
     participant_roles,
 )
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 setup_page("🎙️ Podcasts", only_check_mandatory_models=False)
+
+hide_header_and_padding()
 
 text_to_speech_models = Model.get_models_by_type("text_to_speech")
 

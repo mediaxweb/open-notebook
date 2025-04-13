@@ -6,10 +6,11 @@ from open_notebook.config import CONFIG
 from open_notebook.domain.models import DefaultModels, Model, model_manager
 from open_notebook.models import MODEL_CLASS_MAP
 from pages.components.model_selector import model_selector
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 setup_page("🤖 Models", only_check_mandatory_models=False, stop_on_model_error=False)
 
+hide_header_and_padding()
 
 st.title("🤖 Models")
 

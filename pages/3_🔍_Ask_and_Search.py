@@ -6,9 +6,11 @@ from open_notebook.domain.models import DefaultModels, model_manager
 from open_notebook.domain.notebook import Note, Notebook, text_search, vector_search
 from open_notebook.graphs.ask import graph as ask_graph
 from pages.components.model_selector import model_selector
-from pages.stream_app.utils import convert_source_references, setup_page
+from pages.stream_app.utils import convert_source_references, setup_page, hide_header_and_padding
 
 setup_page("🔍 Search")
+
+hide_header_and_padding()
 
 ask_tab, search_tab = st.tabs(["Ask Your Knowledge Base (beta)", "Search"])
 
