@@ -115,7 +115,7 @@ def chat_sidebar(current_notebook: Notebook, current_session: ChatSession):
     #                 st.rerun()
 
     with st.container(border=True):
-        st.subheader("Chat")
+        st.subheader("Hỏi đáp")
         request = st.chat_input("Đặt câu hỏi")
         # removing for now since it's not multi-model capable right now
         if request:

@@ -198,34 +198,44 @@ def setup_page(
     # version_sidebar()
 
 
-def convert_source_references(text):
+def convert_source_references(text, display=False):
     """
-    Converts source references in brackets to markdown-style links.
+    Converts or removes source references in brackets.
 
     Matches patterns like [source_insight:id], [note:id], [source:id], or [source_embedding:id]
-    and converts them to markdown links.
+    and either removes them or converts them to markdown links.
+    If display=False, also removes any trailing period that follows a reference.
 
     Args:
         text (str): The input text containing source references
+        display (bool, optional): If True, converts references to links; if False, removes them. Defaults to False.
 
     Returns:
-        str: Text with source references converted to markdown links
+        str: Text with source references converted or removed
 
-    Example:
-        >>> text = "Here is a reference [source_insight:abc123]"
-        >>> convert_source_references(text)
-        'Here is a reference [source_insight:abc123](/?object_id=source_insight:abc123)'
+    Examples:
+        >>> text = "Here is a reference [source_insight:abc123]."
+        >>> convert_source_references(text, display=True)
+        'Here is a reference [source_insight:abc123](/?object_id=source_insight:abc123).'
+        >>> convert_source_references(text, display=False)
+        'Here is a reference '
     """
 
     # Pattern matches [type:id] where type can be source_insight, note, source, or source_embedding
-    pattern = r"\[((?:source_insight|note|source|source_embedding):[\w\d]+)\]"
+    # The optional group (\.)? captures a period that might follow the reference
+    pattern = r"\[((?:source_insight|note|source|source_embedding):[\w\d]+)\](\.)?"
 
-    def replace_match(match):
-        """Helper function to create the markdown link"""
-        source_ref = match.group(1)  # Gets the content inside brackets
-        return f"[[{source_ref}]](/?object_id={source_ref})"
+    if display:
+        # Convert to markdown links while preserving any trailing period
+        def replace_match(match):
+            """Helper function to create the markdown link"""
+            source_ref = match.group(1)  # Gets the content inside brackets
+            period = match.group(2) or ""  # Gets the period if it exists, otherwise empty string
+            return f"[[{source_ref}]](/?object_id={source_ref}){period}"
 
-    # Replace all matches in the text
-    converted_text = re.sub(pattern, replace_match, text)
+        converted_text = re.sub(pattern, replace_match, text)
+    else:
+        # Remove references including any trailing period
+        converted_text = re.sub(pattern, "", text)
 
     return converted_text

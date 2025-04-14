@@ -8,11 +8,11 @@ from open_notebook.graphs.ask import graph as ask_graph
 from pages.components.model_selector import model_selector
 from pages.stream_app.utils import convert_source_references, setup_page, hide_header_and_padding
 
-setup_page("🔍 Search")
+setup_page("Tìm kiếm", icon="🔍")
 
 hide_header_and_padding()
 
-ask_tab, search_tab = st.tabs(["Ask Your Knowledge Base (beta)", "Search"])
+ask_tab, search_tab = st.tabs(["Đặt câu hỏi với cơ sở tri thức (thử nghiệm)", "Tìm kiếm"])
 
 if "search_results" not in st.session_state:
     st.session_state["search_results"] = []
@@ -51,38 +51,38 @@ def results_card(item):
 
 
 with ask_tab:
-    st.subheader("Ask Your Knowledge Base (beta)")
+    st.subheader("Đặt câu hỏi với cơ sở tri thức (thử nghiệm)")
     st.caption(
-        "The LLM will answer your query based on the documents in your knowledge base. "
+        "Mô hình LLM sẽ trả lời câu hỏi của bạn dựa trên các tài liệu trong cơ sở tri thức của bạn. "
     )
-    question = st.text_input("Question", "")
+    question = st.text_input("Câu hỏi", "")
     default_model = DefaultModels().default_chat_model
     strategy_model = model_selector(
-        "Query Strategy Model",
+        "Mô hình Chiến lược Truy vấn",
         "strategy_model",
         selected_id=default_model,
         model_type="language",
-        help="This is the LLM that will be responsible for strategizing the search",
+        help="Mô hình LLM sẽ xử lý các truy vấn chiến lược",
     )
     answer_model = model_selector(
-        "Individual Answer Model",
+        "Mô hình Trả lời Cá nhân",
         "answer_model",
         model_type="language",
         selected_id=default_model,
-        help="This is the LLM that will be responsible for processing individual subqueries",
+        help="Mô hình LLM sẽ xử lý các truy vấn cá nhân",
     )
     final_answer_model = model_selector(
-        "Final Answer Model",
+        "Mô hình Trả lời Cuối cùng",
         "final_answer_model",
         model_type="language",
         selected_id=default_model,
-        help="This is the LLM that will be responsible for processing the final answer",
+        help="Mô hình LLM sẽ xử lý câu trả lời cuối cùng",
     )
     if not model_manager.embedding_model:
         st.warning(
             "You can't use this feature because you have no embedding model selected. Please set one up in the Models page."
         )
-    ask_bt = st.button("Ask") if model_manager.embedding_model else None
+    ask_bt = st.button("Hỏi") if model_manager.embedding_model else None
     placeholder = st.container()
 
     async def stream_results():
@@ -94,11 +94,11 @@ with ask_tab:
                     f"Agent Strategy: {chunk['agent']['strategy'].reasoning}"
                 ):
                     for search in chunk["agent"]["strategy"].searches:
-                        st.markdown(f"Searched for: **{search.term}**")
-                        st.markdown(f"Instructions: {search.instructions}")
+                        st.markdown(f"Tìm kiếm: **{search.term}**")
+                        st.markdown(f"Yêu cầu: {search.instructions}")
             elif "provide_answer" in chunk:
                 for answer in chunk["provide_answer"]["answers"]:
-                    with placeholder.expander("Answer"):
+                    with placeholder.expander("Trả lời"):
                         st.markdown(convert_source_references(answer))
             elif "write_final_answer" in chunk:
                 st.session_state["ask_results"]["answer"] = chunk["write_final_answer"][
@@ -112,7 +112,7 @@ with ask_tab:
                     )
 
     if ask_bt:
-        placeholder.write(f"Searching for {question}")
+        placeholder.write(f"Câu hỏi: {question}")
         st.session_state["ask_results"]["question"] = question
         st.session_state["ask_results"]["answer"] = None
 
@@ -124,38 +124,38 @@ with ask_tab:
                 notebook = st.selectbox(
                     "Notebook", Notebook.get_all(), format_func=lambda x: x.name
                 )
-                if st.form_submit_button("Save Answer as Note"):
+                if st.form_submit_button("Thêm câu trả lời vào ghi chú"):
                     note = Note(
                         title=st.session_state["ask_results"]["question"],
                         content=st.session_state["ask_results"]["answer"],
                     )
                     note.save()
                     note.add_to_notebook(notebook.id)
-                    st.success("Note saved successfully")
+                    st.success("Tạo thành công!")
 
 
 with search_tab:
     with st.container(border=True):
-        st.subheader("🔍 Search")
-        st.caption("Search your knowledge base for specific keywords or concepts")
-        search_term = st.text_input("Search", "")
+        st.subheader("🔍 Tìm kiếm")
+        st.caption("Tìm kiếm trong cơ sở tri thức của bạn cho các từ khóa hoặc khái niệm cụ thể")
+        search_term = st.text_input("Tìm kiếm", "")
         if not model_manager.embedding_model:
             st.warning(
                 "You can't use vector search because you have no embedding model selected. Only text search will be available."
             )
             search_type = "Text Search"
         else:
-            search_type = st.radio("Search Type", ["Text Search", "Vector Search"])
-        search_sources = st.checkbox("Search Sources", value=True)
-        search_notes = st.checkbox("Search Notes", value=True)
-        if st.button("Search"):
-            if search_type == "Text Search":
-                st.write(f"Searching for {search_term}")
+            search_type = st.radio("Kiểu tìm kiếm", ["Văn bản", "Vector"])
+        search_sources = st.checkbox("Tìm trong nguồn tài liệu", value=True)
+        search_notes = st.checkbox("Tìm trong ghi chú", value=True)
+        if st.button("Tìm"):
+            if search_type == "Văn bản":
+                st.write(f"Tìm kiếm: {search_term}")
                 st.session_state["search_results"] = text_search(
                     search_term, 100, search_sources, search_notes
                 )
-            elif search_type == "Vector Search":
-                st.write(f"Searching for {search_term}")
+            elif search_type == "Vector":
+                st.write(f"Tìm kiếm: {search_term}")
                 st.session_state["search_results"] = vector_search(
                     search_term, 100, search_sources, search_notes
                 )

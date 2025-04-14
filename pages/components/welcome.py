@@ -27,7 +27,7 @@ def welcome():
         st.markdown("<div>", unsafe_allow_html=True)
         st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXVwbG9hZC1pY29uIGx1Y2lkZS11cGxvYWQiPjxwYXRoIGQ9Ik0yMSAxNXY0YTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0ydi00Ii8+PHBvbHlsaW5lIHBvaW50cz0iMTcgOCAxMiAzIDcgOCIvPjxsaW5lIHgxPSIxMiIgeDI9IjEyIiB5MT0iMyIgeTI9IjE1Ii8+PC9zdmc+", width=48)
         st.subheader("Một chatbot dựa trên các nguồn của bạn")
-        st.text("Tải tài liệu lên và Open Notebook sẽ trả lời các câu hỏi chi tiết hoặc hiển thị những thông tin chi tiết quan trọng")
+        st.text("Tải tài liệu lên và Open Notebook sẽ trả lời các câu hỏi chi tiết hoặc hiển thị những thông tin quan trọng")
         st.markdown("</div>", unsafe_allow_html=True)
         
     with col2:

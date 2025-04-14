@@ -14,22 +14,22 @@ from pages.stream_app.utils import convert_to_vn_time
 from .consts import note_context_icons
 
 
-@st.dialog("Write a Note", width="large")
+@st.dialog("Thêm ghi chú", width="large")
 def add_note(notebook_id):
     if not model_manager.embedding_model:
         st.warning(
             "Since there is no embedding model selected, your note will be saved but not searchable."
         )
-    note_title = st.text_input("Title")
-    note_content = st.text_area("Content")
-    if st.button("Save", key="add_note"):
+    note_title = st.text_input("Tiêu đề")
+    note_content = st.text_area("Nội dung")
+    if st.button("Lưu", key="add_note"):
         note = Note(title=note_title, content=note_content, note_type="human")
         note.save()
         note.add_to_notebook(notebook_id)
         st.rerun()
 
 
-@st.dialog("Add a Note", width="large")
+@st.dialog("Ghi chú", width="large")
 def note_panel_dialog(note: Optional[Note] = None, notebook_id=None):
     note_panel(note_id=note.id, notebook_id=notebook_id)
 

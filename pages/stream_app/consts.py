@@ -1,10 +1,10 @@
 source_context_icons = [
-    "⛔ not in context",
-    "🟡 insights",
-    "🟢 full content",
+    "⛔ Không thuộc ngữ cảnh",
+    "🟡 Trọng tâm",
+    "🟢 Toàn bộ nội dung",
 ]
 
 note_context_icons = [
-    "⛔ not in context",
-    "🟢 full content",
+    "⛔ Không thuộc ngữ cảnh",
+    "🟢 Toàn bộ nội dung",
 ]
