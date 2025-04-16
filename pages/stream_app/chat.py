@@ -80,7 +80,7 @@ def chat_sidebar(current_notebook: Notebook, current_session: ChatSession):
             #     st.session_state[current_session.id]["messages"] = response["messages"]
 
         with st.container(key="chat_tab_body"):
-            messages = st.session_state[current_session.id]["messages"][::-1]
+            messages = st.session_state[current_session.id]["messages"]
             if not messages:
                 st.markdown(
                 '<div class="empty-chat" style="gap:18px; height: 100%; justify-content: center; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center;">'

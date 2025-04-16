@@ -361,7 +361,11 @@ def notebook_page(current_notebook: Notebook):
             .stHeading > hr {
                 height: 1px !important;    
             }
-                .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
+            .stHeading > div > div > h3 {
+                font-size: 24px !important;
+                font-weight: 500 !important;
+            }
+            .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
                 display: flex;
                 flex-direction: row-reverse;
                 align-itmes: end;
@@ -464,7 +468,13 @@ st.markdown(
             }
             h1 {
                 color: #CC5F33 !important;
+                font-size: 40px !important;
+                font-weight: 600 !important;
                 padding: 16px 0px 8px 0px !important;
+            }
+            h3 {
+                font-size: 24px !important;
+                font-weight: 500 !important;
             }
         </style>
         """,
