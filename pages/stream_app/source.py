@@ -24,7 +24,7 @@ def source_panel_dialog(source_id, notebook_id=None):
     source_panel(source_id, notebook_id=notebook_id, modal=True)
 
 
-@st.dialog("Thêm dữ liệu", width="large")
+@st.dialog("Thêm tài liệu", width="large")
 def add_source(notebook_id):
     if not model_manager.speech_to_text:
         st.warning(
@@ -33,7 +33,7 @@ def add_source(notebook_id):
     source_link = None
     source_file = None
     source_text = None
-    source_type = st.radio("Type", ["Đường dẫn", "Tải lên", "Văn bản"])
+    source_type = st.radio("Kiểu tài liệu", ["Đường dẫn", "Tải lên", "Văn bản"])
     req = {}
     transformations = Transformation.get_all()
     if source_type == "Đường dẫn":

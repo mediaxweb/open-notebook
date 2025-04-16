@@ -24,8 +24,8 @@ def welcome():
         # st.markdown("<div id='main-wrapper'>", unsafe_allow_html=True)
         st.html(
         "<div style='text-align: center; display: flex; flex-direction: column; align-items: center;'>"
-            "<span style='font-size: 44px; font-weight: bold; color: #CC5F33;'>Tạo sổ tay đầu tiên của bạn</span>"
-            "<span style='font-size: 24px; font-weight: 600;'>Trợ lý AI hỗ trợ viết và nghiên cứu, phát huy tối đa hiệu quả khi có các tài liệu do bạn cung cấp.</span>"
+            "<span style='font-size: 44px; font-weight: bold; color: #CC5F33;'>Sổ tay tri thức hỗ trợ cán bộ, công chức trong công việc</span>"
+            "<span style='font-size: 24px; font-weight: 600;'>Trợ lý AI giúp tra cứu, phân tích và khai thác hiệu quả các tài liệu nội bộ.</span>"
         "</div>"
         )
         # st.subheader("Trợ lý viết và nghiên cứu của bạn, được hỗ trợ bởi AI, hoạt động hiệu quả nhất khi có các tài liệu do bạn cung cấp.")
@@ -35,22 +35,22 @@ def welcome():
         with col1:
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11cGxvYWQtaWNvbiBsdWNpZGUtdXBsb2FkIj48cGF0aCBkPSJNMjEgMTV2NGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMnYtNCIvPjxwb2x5bGluZSBwb2ludHM9IjE3IDggMTIgMyA3IDgiLz48bGluZSB4MT0iMTIiIHgyPSIxMiIgeTE9IjMiIHkyPSIxNSIvPjwvc3ZnPg==", width=48)
-            st.subheader("Một chatbot dựa trên các nguồn của bạn")
-            st.text("Tải tài liệu lên và Sổ trí tuệ sẽ trả lời các câu hỏi chi tiết hoặc hiển thị những thông tin quan trọng")
+            st.subheader("Chatbot trợ lý nghiên cứu tài liệu")
+            st.text("Tải lên các tài liệu quan trọng – Trợ lý AI sẽ hỗ trợ trả lời câu hỏi chi tiết cho các nội dung trong tài liệu mà bạn cung cấp.")
             # st.markdown("</div>", unsafe_allow_html=True)
             
         with col2:
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1tZXNzYWdlLXNxdWFyZS10ZXh0LWljb24gbHVjaWRlLW1lc3NhZ2Utc3F1YXJlLXRleHQiPjxwYXRoIGQ9Ik0yMSAxNWEyIDIgMCAwIDEtMiAySDdsLTQgNFY1YTIgMiAwIDAgMSAyLTJoMTRhMiAyIDAgMCAxIDIgMnoiLz48cGF0aCBkPSJNMTMgOEg3Ii8+PHBhdGggZD0iTTE3IDEySDciLz48L3N2Zz4=", width=48)
-            st.subheader("Nhanh chóng nắm được nội dung của tài liệu bất kỳ")
-            st.text("Biến các tài liệu chuyên môn thành định dạng dễ hiểu hơn như Câu hỏi thường gặp hoặc Tóm tắt thông tin.")
+            st.subheader("Nắm bắt nhanh nội dung các tài liệu")
+            st.text("Hệ thống giúp chuyển các tài liệu chuyên môn thành dạng dễ hiểu hơn như: Câu hỏi thường gặp, tóm tắt nội dung, thông tin nổi bật.")
             # st.markdown("</div>", unsafe_allow_html=True)
 
         with col3:
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2Vycy1pY29uIGx1Y2lkZS11c2VycyI+PHBhdGggZD0iTTE2IDIxdi0yYTQgNCAwIDAgMC00LTRINmE0IDQgMCAwIDAtNCA0djIiLz48Y2lyY2xlIGN4PSI5IiBjeT0iNyIgcj0iNCIvPjxwYXRoIGQ9Ik0yMiAyMXYtMmE0IDQgMCAwIDAtMy0zLjg3Ii8+PHBhdGggZD0iTTE2IDMuMTNhNCA0IDAgMCAxIDAgNy43NSIvPjwvc3ZnPg==", width=48)
-            st.subheader("Chia sẻ thông tin của bạn với mọi người")
-            st.text("Thêm tài liệu quan trọng vào sổ tay và chia sẻ với tổ chức để xây dựng cơ sở tri thức chung.")
+            st.subheader("Chia sẻ tri thức trong tổ chức")
+            st.text("Chia sẻ các tài liệu quan trọng trong nội bộ cơ quan để xây dựng kho tri thức dùng chung, nâng cao hiệu quả làm việc và quản lý.")
             # st.markdown("</div>", unsafe_allow_html=True)
         
         if st.button("Tạo sổ mới", type="primary"):

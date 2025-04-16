@@ -14,16 +14,15 @@ from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 load_dotenv()
 
-setup_page("Open Notebook", sidebar_state="collapsed")
-
-# with open( "style.css" ) as css:
-#     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+setup_page("Sổ trí tuệ", sidebar_state="collapsed")
 
 if "object_id" not in st.query_params:
     # https://notebooklm.google.com/ 
     # st.switch_page("pages/2_📒_Notebooks.py")
     # st.stop()
     welcome()
+    with open( "style.css" ) as css:
+        st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
     st.stop()
 
 object_id = st.query_params["object_id"]
@@ -43,3 +42,4 @@ elif obj_type == "source_insight":
     source_insight_panel(object_id)
 elif obj_type == "source_embedding":
     source_embedding_panel(object_id)
+

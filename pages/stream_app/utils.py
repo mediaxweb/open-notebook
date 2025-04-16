@@ -190,7 +190,7 @@ def setup_page(
     sidebar_state="expanded",
     only_check_mandatory_models=True,
     stop_on_model_error=True,
-    icon = "📒",
+    icon = "app/static/quoc-huy.png",
 ):
     """Common page setup for all pages"""
     st.set_page_config(
