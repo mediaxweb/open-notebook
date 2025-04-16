@@ -12,7 +12,6 @@ from open_notebook.utils import token_count
 from pages.stream_app.utils import (
     convert_source_references,
 )
-from streamlit_chat import message
 
 from .note import make_note_from_chat
 
