@@ -14,7 +14,7 @@ from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 load_dotenv()
 
-setup_page("Open Notebook", sidebar_state="collapsed")
+setup_page("Sổ trí tuệ", sidebar_state="collapsed")
 
 if "object_id" not in st.query_params:
     # https://notebooklm.google.com/ 

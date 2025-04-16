@@ -8,7 +8,7 @@ from pages.stream_app.source import add_source, source_card
 from pages.stream_app.utils import setup_page, setup_stream_state, hide_header_and_padding, convert_to_vn_time
 from pages.components.header import header
 
-setup_page("Open Notebook", only_check_mandatory_models=True)
+setup_page("Sổ trí tuệ", only_check_mandatory_models=True)
 
 
 
@@ -114,8 +114,8 @@ def notebook_page(current_notebook: Notebook):
         with sources_tab:
             with st.container(border=True, key="sources_tab"):
                 with st.container(key="sources_tab_header"):
-                    st.subheader("Dữ liệu", divider="gray")
-                    if st.button("Thêm dữ liệu", icon=":material/add:", type="primary", use_container_width=True):
+                    st.subheader("Tài liệu", divider="gray")
+                    if st.button("Thêm tài liệu", icon=":material/add:", type="primary", use_container_width=True):
                         add_source(current_notebook.id)
             
                 if len(sources) == 0:
@@ -412,9 +412,9 @@ if st.session_state["current_notebook_id"]:
     hide_header_and_padding()
     st.stop()
 
-st.title("Sổ tay của tôi")
+st.title("Sổ tay tri thức của tỉnh")
 st.caption(
-    "Sổ tay là một cách tuyệt vời để sắp xếp suy nghĩ, ý tưởng và tài liệu của bạn. Bạn có thể tạo sổ tay cho các chủ đề và dự án nghiên cứu khác nhau v.v..."
+    "Sổ tay là công cụ hữu ích giúp tổ chức, lưu trữ và truy xuất các tài liệu, ý tưởng, quy trình làm việc của các phòng ban . Quý đơn vị có thể tạo các sổ tay riêng cho từng chủ đề, lĩnh vực hoặc dự án phục vụ quản lý và nghiên cứu."
 )
 # st.divider()
 
