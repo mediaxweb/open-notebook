@@ -1,6 +1,6 @@
 source_context_icons = [
     "⛔ not in context",
-    "🟡 insights",
+    "🟡 insight",
     "🟢 full content",
 ]
 

@@ -1,25 +1,33 @@
 [server]
 
 port = 8502
+enableStaticServing = true
 maxMessageSize = 500
 
 [browser]
 serverPort = 8502
 
-# [theme]
+[client]
+showSidebarNavigation = false
+toolbarMode = "minimal"
+
+[ui]
+hideTopBar = true
+
+[theme]
 
 # # The preset Streamlit theme that your custom theme inherits from.
 # # One of "light" or "dark".
 # base =
 
 # # Primary accent color for interactive elements.
-# primaryColor =
+primaryColor = "#CC5F33"
 
 # # Background color for the main content area.
-# backgroundColor =
+# backgroundColor = "#F9F5F4"
 
 # # Background color used for the sidebar and most interactive widgets.
-# secondaryBackgroundColor =
+# secondaryBackgroundColor = "#FCF2F2"
 
 # # Color used for almost all text.
 # textColor =
@@ -27,4 +35,5 @@ serverPort = 8502
 # # Font family for all text in the app, except code blocks. One of "sans serif",
 # # "serif", or "monospace".
 # font =
+
 

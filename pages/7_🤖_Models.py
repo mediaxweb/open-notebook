@@ -6,14 +6,15 @@ from open_notebook.config import CONFIG
 from open_notebook.domain.models import DefaultModels, Model, model_manager
 from open_notebook.models import MODEL_CLASS_MAP
 from pages.components.model_selector import model_selector
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
-setup_page("🤖 Models", only_check_mandatory_models=False, stop_on_model_error=False)
+setup_page("Mô hình", only_check_mandatory_models=False, stop_on_model_error=False, icon="🤖")
 
+hide_header_and_padding()
 
-st.title("🤖 Models")
+st.title("🤖 Mô hình")
 
-model_tab, model_defaults_tab = st.tabs(["Models", "Model Defaults"])
+model_tab, model_defaults_tab = st.tabs(["Mô hình", "Mô hình mặc định"])
 
 provider_status = {}
 
@@ -93,12 +94,12 @@ default_models = DefaultModels()
 all_models = Model.get_all()
 
 with model_tab:
-    st.subheader("Add Model")
+    st.subheader("Thêm mô hình")
 
-    provider = st.selectbox("Provider", available_providers)
+    provider = st.selectbox("Nhà cung cấp", available_providers)
     if len(unavailable_providers) > 0:
         st.caption(
-            f"Unavailable Providers: {', '.join(unavailable_providers)}. Please check docs page if you wish to enable them."
+            f"Nhà cung cấp không khả dụng: {', '.join(unavailable_providers)}."
         )
 
     # Filter model types based on provider availability in MODEL_CLASS_MAP
@@ -108,39 +109,39 @@ with model_tab:
             available_model_types.append(model_type)
 
     if not available_model_types:
-        st.error(f"No compatible model types available for provider: {provider}")
+        st.error(f"Không có loại mô hình tương thích nào với nhà cung cấp: {provider}")
     else:
         model_type = st.selectbox(
-            "Model Type",
+            "Loại mô hình",
             available_model_types,
-            help="Use language for text generation models, text_to_speech for TTS models for generating podcasts, etc.",
+            help='Sử dụng "language" cho các mô hình sinh văn bản, "text_to_speech" cho các mô hình TTS để tạo podcast, v.v.',
         )
         if model_type == "text_to_speech" and provider == "gemini":
             model_name = "gemini-default"
             st.markdown("Gemini models are pre-configured. Using the default model.")
         else:
             model_name = st.text_input(
-                "Model Name", "", help="gpt-4o-mini, claude, gemini, llama3, etc"
+                "Tên mô hình", "", help="gpt-4o-mini, claude, gemini, llama3, v.v."
             )
-        if st.button("Save"):
+        if st.button("Lưu"):
             model = Model(name=model_name, provider=provider, type=model_type)
             model.save()
-            st.success("Saved")
+            st.success("Lưu thành công!")
 
     st.divider()
     suggested_models = CONFIG.get("suggested_models", [])
     recommendations = generate_new_models(all_models, suggested_models)
     if len(recommendations) > 0:
-        with st.expander("💁‍♂️ Recommended models to get you started.."):
+        with st.expander("💁‍♂️ Mô hình đề xuất"):
             for recommendation in recommendations:
                 st.markdown(
                     f"**{recommendation['name']}** ({recommendation['provider']}, {recommendation['type']})"
                 )
-                if st.button("Add", key=f"add_{recommendation['name']}"):
+                if st.button("Thêm", key=f"add_{recommendation['name']}"):
                     new_model = Model(**recommendation)
                     new_model.save()
                     st.rerun()
-    st.subheader("Configured Models")
+    st.subheader("Mô hình thiết lập sẵn")
     model_types_available = {
         # "vision": False,
         "language": False,
@@ -152,7 +153,7 @@ with model_tab:
         model_types_available[model.type] = True
         with st.container(border=True):
             st.markdown(f"{model.name} ({model.provider}, {model.type})")
-            if st.button("Delete", key=f"delete_{model.id}"):
+            if st.button("Xóa", key=f"delete_{model.id}"):
                 model.delete()
                 st.rerun()
 
@@ -172,16 +173,16 @@ with model_defaults_tab:
     ]
     vision_models = [model for model in all_models if model.type == "vision"]
     embedding_models = [model for model in all_models if model.type == "embedding"]
-    st.write(
-        "In this section, you can select the default models to be used on the various content operations done by Open Notebook. Some of these can be overriden in the different modules."
-    )
+    # st.write(
+    #     "In this section, you can select the default models to be used on the various content operations done by Open Notebook. Some of these can be overriden in the different modules."
+    # )
     defs = {}
     # Handle chat model selection
     selected_model = model_selector(
-        "Default Chat Model",
+        "Mô hình chat",
         "default_chat_model",
         selected_id=default_models.default_chat_model,
-        help="This model will be used for chat.",
+        help="Mô hình này sẽ được sử dụng cho chat.",
         model_type="language",
     )
     if selected_model:
@@ -189,61 +190,61 @@ with model_defaults_tab:
     st.divider()
     # Handle transformation model selection
     selected_model = model_selector(
-        "Default Transformation Model",
+        "Mô hình xử lý dữ liệu",
         "default_transformation_model",
         selected_id=default_models.default_transformation_model,
-        help="This model will be used for text transformations such as summaries, insights, etc.",
+        help="Mô hình này sẽ được sử dụng cho việc xử lý, chuyển đổi dữ liệu",
         model_type="language",
     )
     if selected_model:
         default_models.default_transformation_model = selected_model.id
-    st.caption("You can use a cheap model here like gpt-4o-mini, llama3, etc.")
+    # st.caption("You can use a cheap model here like gpt-4o-mini, llama3, etc.")
     st.divider()
 
     # Handle tools model selection
     selected_model = model_selector(
-        "Default Tools Model",
+        "Mô hình công cụ",
         "default_tools_model",
         selected_id=default_models.default_tools_model,
-        help="This model will be used for calling tools. Currently, it's best to use Open AI and Anthropic for this.",
+        help="Mô hình này sẽ được sử dụng cho việc gọi công cụ. Hiện tại, tốt nhất là sử dụng Open AI và Anthropic.",
         model_type="language",
     )
     if selected_model:
         default_models.default_tools_model = selected_model.id
-    st.caption("Recommended to use a capable model here, like gpt-4o, claude, etc.")
+    st.caption("Khuyến nghị sử dụng: gpt-4o, claude, v.v.")
     st.divider()
 
     # Handle large context model selection
     selected_model = model_selector(
-        "Large Context Model",
+        "Mô hình ngữ cảnh lớn",
         "large_context_model",
         selected_id=default_models.large_context_model,
-        help="This model will be used for larger context generation -- recommended: Gemini",
+        help="Mô hình này sẽ được sử dụng trong trường hợp ngữ cảnh lớn.",
         model_type="language",
     )
     if selected_model:
         default_models.large_context_model = selected_model.id
-    st.caption("Recommended to use Gemini models for larger context processing")
+    st.caption("Khuyến nghị sử dụng: Gemini")
     st.divider()
 
     # Handle text-to-speech model selection
     selected_model = model_selector(
-        "Default Text to Speech Model",
+        "Mô hình chuyển văn bản thành giọng nói",
         "default_text_to_speech_model",
         selected_id=default_models.default_text_to_speech_model,
-        help="This is the default model for converting text to speech (podcasts, etc)",
+        help="Mô hình này sẽ được sử dụng để chuyển văn bản thành giọng nói (podcasts, v.v.)",
         model_type="text_to_speech",
     )
-    st.caption("You can override this model on different podcasts")
+    st.caption("Bạn có thể ghi đè mô hình này trên các podcast khác")
     if selected_model:
         default_models.default_text_to_speech_model = selected_model.id
     st.divider()
 
     # Handle speech-to-text model selection
     selected_model = model_selector(
-        "Default Speech to Text Model",
+        "Mô hình chuyển đổi giọng nói thành văn bản",
         selected_id=default_models.default_speech_to_text_model,
-        help="This is the default model for converting speech to text (audio transcriptions, etc)",
+        help="Mô hình này sẽ được sử dụng để chuyển đổi giọng nói thành văn bản (chuyển đổi âm thanh, v.v.)",
         model_type="speech_to_text",
         key="default_speech_to_text_model",
     )
@@ -254,23 +255,23 @@ with model_defaults_tab:
     st.divider()
     # Handle embedding model selection
     selected_model = model_selector(
-        "Default Speech to Text Model",
+        "Mô hình nhúng (mã hóa)",
         "default_embedding_model",
         selected_id=default_models.default_embedding_model,
-        help="This is the default model for embeddings (semantic search, etc)",
+        help="Mô hình này sẽ được sử dụng cho việc nhúng (tìm kiếm ngữ nghĩa, v.v.)",
         model_type="embedding",
     )
     if selected_model:
         default_models.default_embedding_model = selected_model.id
     st.warning(
-        "Caution: you cannot change the embedding model once there is embeddings or they will need to be regenerated"
+        "Lưu ý: Mô hình nhúng sẽ không thể thay đổi nếu đã được sử dụng để mã hóa dữ liệu. Nếu thay đổi, những dữ liệu đó sẽ cần phải mã hóa lại."
     )
 
     for k, v in defs.items():
         if v:
             defs[k] = v.id
 
-    if st.button("Save Defaults"):
+    if st.button("Lưu Mặc Định"):
         default_models.patch(defs)
         model_manager.refresh_defaults()
-        st.success("Saved")
+        st.success("Đã lưu!")

@@ -14,15 +14,17 @@ from open_notebook.exceptions import UnsupportedTypeException
 from open_notebook.graphs.source import source_graph
 from pages.components import source_panel
 
+from pages.stream_app.utils import convert_to_vn_time
+
 from .consts import source_context_icons
 
 
-@st.dialog("Source", width="large")
+@st.dialog("Dữ liệu", width="large")
 def source_panel_dialog(source_id, notebook_id=None):
     source_panel(source_id, notebook_id=notebook_id, modal=True)
 
 
-@st.dialog("Add a Source", width="large")
+@st.dialog("Thêm dữ liệu", width="large")
 def add_source(notebook_id):
     if not model_manager.speech_to_text:
         st.warning(
@@ -31,39 +33,39 @@ def add_source(notebook_id):
     source_link = None
     source_file = None
     source_text = None
-    source_type = st.radio("Type", ["Link", "Upload", "Text"])
+    source_type = st.radio("Type", ["Đường dẫn", "Tải lên", "Văn bản"])
     req = {}
     transformations = Transformation.get_all()
-    if source_type == "Link":
-        source_link = st.text_input("Link")
+    if source_type == "Đường dẫn":
+        source_link = st.text_input("Đường dẫn", placeholder="https://example.com/file.pdf")
         req["url"] = source_link
-    elif source_type == "Upload":
-        source_file = st.file_uploader("Upload")
-        req["delete_source"] = st.checkbox("Delete source after processing", value=True)
+    elif source_type == "Tải lên":
+        source_file = st.file_uploader("Tải lên")
+        req["delete_source"] = st.checkbox("Xóa file sau khi xử lý", value=True)
 
     else:
-        source_text = st.text_area("Text")
+        source_text = st.text_area("Văn bản")
         req["content"] = source_text
 
     transformations = Transformation.get_all()
     default_transformations = [t for t in transformations if t.apply_default]
     apply_transformations = st.multiselect(
-        "Apply transformations",
+        "Chuyển đổi nội dung",
         options=transformations,
         format_func=lambda t: t.name,
         default=default_transformations,
     )
     run_embed = st.checkbox(
-        "Embed content for vector search",
-        help="Creates an embedded content for vector search. Costs a little money and takes a little bit more time. You can do this later if you prefer.",
+        "Mã hóa nội dung để phục vụ tìm kiếm vector",
+        help="Có thể sẽ mất thêm chi phí và thời gian.",
     )
-    if st.button("Process", key="add_source"):
+    if st.button("Bắt đầu xử lý", key="add_source"):
         logger.debug("Adding source")
-        with st.status("Processing...", expanded=True):
-            st.write("Processing document...")
+        with st.status("Đang xử lý...", expanded=True):
+            st.write("Đang xử lý dữ liệu...")
             try:
-                if source_type == "Upload" and source_file is not None:
-                    st.write("Uploading..")
+                if source_type == "Tải lên" and source_file is not None:
+                    st.write("Đang tải lên...")
                     file_name = source_file.name
                     file_extension = Path(file_name).suffix
                     base_name = Path(file_name).stem
@@ -93,13 +95,13 @@ def add_source(notebook_id):
                 )
             except UnsupportedTypeException as e:
                 st.warning(
-                    "This type of content is not supported yet. If you think it should be, let us know on the project Issues's page"
+                    "Nội dung này chưa được hỗ trợ."
                 )
-                st.error(e)
-                st.link_button(
-                    "Go to Github Issues",
-                    url="https://www.github.com/lfnovo/open-notebook/issues",
-                )
+                # st.error(e)
+                # st.link_button(
+                #     "Go to Github Issues",
+                #     url="https://www.github.com/lfnovo/open-notebook/issues",
+                # )
                 st.stop()
 
             except Exception as e:
@@ -111,10 +113,10 @@ def add_source(notebook_id):
 
 def source_card(source, notebook_id):
     # todo: more descriptive icons
-    icon = "🔗"
+    icon = ":material/attachment:"
 
     with st.container(border=True):
-        title = (source.title if source.title else "No Title").strip()
+        title = (source.title if source.title else "Không có tiêu đề").strip()
         st.markdown((f"{icon}**{title}**"))
         context_state = st.selectbox(
             "Context",
@@ -123,10 +125,13 @@ def source_card(source, notebook_id):
             index=1,
             key=f"source_{source.id}",
         )
+        # st.caption(
+        #     f"Updated: {convert_to_vn_time(source.updated)}, **{len(source.insights)}** insights"
+        # )
         st.caption(
-            f"Updated: {naturaltime(source.updated)}, **{len(source.insights)}** insights"
+            f"Ngày tạo: {convert_to_vn_time(source.updated)}"
         )
-        if st.button("Expand", icon="📝", key=source.id):
+        if st.button("Xem chi tiết", icon=":material/bookmarks:", key=source.id):
             source_panel_dialog(source.id, notebook_id)
 
     st.session_state[notebook_id]["context_config"][source.id] = context_state
@@ -137,7 +142,7 @@ def source_list_item(source_id, score=None):
     if not source:
         st.error("Source not found")
         return
-    icon = "🔗"
+    icon = ":material/attachment:"
 
     with st.expander(
         f"{icon} [{score:.2f}] **{source.title}** {naturaltime(source.updated)}"

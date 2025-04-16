@@ -8,7 +8,7 @@ from open_notebook.domain.models import model_manager
 from open_notebook.domain.notebook import Source
 from open_notebook.domain.transformation import Transformation
 from open_notebook.graphs.transformation import graph as transform_graph
-from pages.stream_app.utils import check_models
+from pages.stream_app.utils import check_models, convert_to_vn_time
 
 
 def source_panel(source_id: str, notebook_id=None, modal=False):
@@ -17,13 +17,13 @@ def source_panel(source_id: str, notebook_id=None, modal=False):
     if not source:
         raise ValueError(f"Source not found: {source_id}")
 
-    current_title = source.title if source.title else "No Title"
-    source.title = st.text_input("Title", value=current_title)
+    current_title = source.title if source.title else "Không có tiêu đề"
+    source.title = st.text_input("Tiêu đề", value=current_title)
     if source.title != current_title:
-        st.toast("Saved new Title")
+        st.toast("Cập nhật thành công!")
         source.save()
 
-    process_tab, source_tab = st.tabs(["Process", "Source"])
+    process_tab, source_tab = st.tabs(["Xử lý dữ liệu", "Nguồn"])
     with process_tab:
         c1, c2 = st.columns([4, 2])
         with c1:
@@ -36,35 +36,36 @@ def source_panel(source_id: str, notebook_id=None, modal=False):
                 from_src = f"from file: {source.asset.file_path}"
             else:
                 from_src = "from text"
-            st.caption(f"Created {naturaltime(source.created)}, {from_src}")
+            # st.caption(f"Created {naturaltime(source.created)}, {from_src}")
+            st.caption(f"Ngày tạo {convert_to_vn_time(source.created)}")
             for insight in source.insights:
                 with st.expander(f"**{insight.insight_type}**"):
                     st.markdown(insight.content)
                     x1, x2 = st.columns(2)
                     if x1.button(
-                        "Delete", type="primary", key=f"delete_insight_{insight.id}"
+                        "Xóa", type="primary", key=f"delete_insight_{insight.id}"
                     ):
                         insight.delete()
                         st.rerun(scope="fragment" if modal else "app")
-                        st.toast("Source deleted")
+                        st.toast("Đã xóa thành công!")
                     if notebook_id:
                         if x2.button(
-                            "Save as Note", icon="📝", key=f"save_note_{insight.id}"
+                            "Tạo ghi chú", icon="📝", key=f"save_note_{insight.id}"
                         ):
                             insight.save_as_note(notebook_id)
-                            st.toast("Saved as Note. Refresh the Notebook to see it.")
+                            st.toast("Đã lưu ghi chú.")
 
         with c2:
             transformations = Transformation.get_all(order_by="name asc")
             with st.container(border=True):
                 transformation = st.selectbox(
-                    "Run a transformation",
+                    "Chuyển đổi nội dung",
                     transformations,
                     key=f"transformation_{source.id}",
                     format_func=lambda x: x.name,
                 )
                 st.caption(transformation.description)
-                if st.button("Run"):
+                if st.button("Xử lý"):
                     asyncio.run(
                         transform_graph.ainvoke(
                             input=dict(source=source, transformation=transformation)
@@ -77,27 +78,27 @@ def source_panel(source_id: str, notebook_id=None, modal=False):
                     "No embedding model found. Please, select one on the Models page."
                 )
             else:
-                help = "This will generate your embedding vectors on the database for powerful search capabilities"
+                help = "Mã hóa vectors cho phép tìm kiếm nhanh hơn và chính xác hơn."
 
             if source.embedded_chunks == 0 and st.button(
-                "Embed vectors",
+                "Mã hóa vectors",
                 icon="🦾",
                 help=help,
                 disabled=model_manager.embedding_model is None,
             ):
                 source.vectorize()
-                st.success("Embedding complete")
+                st.success("Mã hóa hoàn tất!")
 
             with st.container(border=True):
                 st.caption(
-                    "Deleting the source will also delete all its insights and embeddings"
+                    "Xóa nguồn sẽ xóa tất cả các thông tin liên quan."
                 )
                 if st.button(
-                    "Delete", type="primary", key=f"bt_delete_source_{source.id}"
+                    "Xóa", type="primary", key=f"bt_delete_source_{source.id}"
                 ):
                     source.delete()
                     st.rerun()
 
     with source_tab:
-        st.subheader("Content")
+        st.subheader("Nội dung")
         stx.scrollableTextbox(source.full_text, height=300)

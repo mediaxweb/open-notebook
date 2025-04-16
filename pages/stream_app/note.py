@@ -9,25 +9,27 @@ from open_notebook.graphs.prompt import graph as prompt_graph
 from open_notebook.utils import surreal_clean
 from pages.components import note_panel
 
+from pages.stream_app.utils import convert_to_vn_time
+
 from .consts import note_context_icons
 
 
-@st.dialog("Write a Note", width="large")
+@st.dialog("Thêm ghi chú", width="large")
 def add_note(notebook_id):
     if not model_manager.embedding_model:
         st.warning(
             "Since there is no embedding model selected, your note will be saved but not searchable."
         )
-    note_title = st.text_input("Title")
-    note_content = st.text_area("Content")
-    if st.button("Save", key="add_note"):
+    note_title = st.text_input("Tiêu đề")
+    note_content = st.text_area("Nội dung")
+    if st.button("Lưu", key="add_note"):
         note = Note(title=note_title, content=note_content, note_type="human")
         note.save()
         note.add_to_notebook(notebook_id)
         st.rerun()
 
 
-@st.dialog("Add a Note", width="large")
+@st.dialog("Ghi chú", width="large")
 def note_panel_dialog(note: Optional[Note] = None, notebook_id=None):
     note_panel(note_id=note.id, notebook_id=notebook_id)
 
@@ -52,9 +54,9 @@ def make_note_from_chat(content, notebook_id=None):
 
 def note_card(note, notebook_id):
     if note.note_type == "human":
-        icon = "🤵"
+        icon = ":material/face:"
     else:
-        icon = "🤖"
+        icon = ":material/smart_toy:"
 
     with st.container(border=True):
         st.markdown((f"{icon} **{note.title if note.title else 'No Title'}**"))
@@ -65,9 +67,9 @@ def note_card(note, notebook_id):
             index=1,
             key=f"note_{note.id}",
         )
-        st.caption(f"Updated: {naturaltime(note.updated)}")
+        st.caption(f"Ngày tạo: {convert_to_vn_time(note.updated)}")
 
-        if st.button("Expand", icon="📝", key=f"edit_note_{note.id}"):
+        if st.button("Xem chi tiết", icon=":material/bookmarks:", key=f"edit_note_{note.id}"):
             note_panel_dialog(notebook_id=notebook_id, note=note)
 
     st.session_state[notebook_id]["context_config"][note.id] = context_state
@@ -84,5 +86,5 @@ def note_list_item(note_id, score=None):
         f"{icon} [{score:.2f}] **{note.title}** {naturaltime(note.updated)}"
     ):
         st.write(note.content)
-        if st.button("Edit Note", icon="📝", key=f"x_edit_note_{note.id}"):
+        if st.button("Edit Note", icon=":material/bookmarks:", key=f"x_edit_note_{note.id}"):
             note_panel_dialog(note=note)

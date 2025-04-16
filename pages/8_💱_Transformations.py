@@ -3,11 +3,12 @@ import streamlit as st
 from open_notebook.domain.transformation import DefaultPrompts, Transformation
 from open_notebook.graphs.transformation import graph as transformation_graph
 from pages.components.model_selector import model_selector
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
-setup_page("🧩 Transformations")
+setup_page("Xử lý dữ liệu", icon="🧩")
+hide_header_and_padding()
 
-transformations_tab, playground_tab = st.tabs(["🧩 Transformations", "🛝 Playground"])
+transformations_tab, playground_tab = st.tabs(["🧩 Xử lý dữ liệu", "🛝 Playground"])
 
 
 if "transformations" not in st.session_state:
@@ -20,23 +21,23 @@ else:
     ]
 
 with transformations_tab:
-    st.header("🧩 Transformations")
+    st.header("🧩 Xử lý dữ liệu")
 
     st.markdown(
-        "Transformations are prompts that will be used by the LLM to process a source and extract insights, summaries, etc. "
+        "Là những prompt chỉ dẫn mô hinh Ai xử lý, phân tích nội dung gốc, từ đó đưa ra các thông tin như nội dung chính, tóm tắt... "
     )
     default_prompts: DefaultPrompts = DefaultPrompts()
-    with st.expander("**⚙️ Default Transformation Prompt**"):
+    with st.expander("**⚙️ Prompt mặc định**"):
         default_prompts.transformation_instructions = st.text_area(
-            "Default Transformation Prompt",
+            "Prompt mặc định",
             default_prompts.transformation_instructions,
             height=300,
         )
-        st.caption("This will be added to all your transformation prompts.")
-        if st.button("Save", key="save_default_prompt"):
+        st.caption("Những thay đổi sẽ được áp dụng cho tất cả các prompt xử lý dữ liệu.")
+        if st.button("Cập nhật", key="save_default_prompt"):
             default_prompts.update()
-            st.toast("Default prompt saved successfully!")
-    if st.button("Create new Transformation", icon="➕", key="new_transformation"):
+            st.toast("Cập nhật thành công!")
+    if st.button("Tạo mới Prompt mới", icon="➕", key="new_transformation"):
         new_transformation = Transformation(
             name="New Tranformation",
             title="New Transformation Title",
@@ -48,32 +49,32 @@ with transformations_tab:
         st.rerun()
 
     st.divider()
-    st.markdown("Your Transformations")
+    st.markdown("Prompt đã tạo")
     if len(st.session_state.transformations) == 0:
         st.markdown(
-            "No transformation created yet. Click 'Create new transformation' to get started."
+            "Chưa có Prompt nào. Bấm 'Tạo mới' để tạo một Prompt mới. "
         )
     else:
         for idx, transformation in enumerate(st.session_state.transformations):
             transform_expander = f"**{transformation.name}**" + (
-                " - default" if transformation.apply_default else ""
+                " - mặc định" if transformation.apply_default else ""
             )
             with st.expander(
                 transform_expander,
                 expanded=(transformation.id is None),
             ):
                 name = st.text_input(
-                    "Transformation Name",
+                    "Tên",
                     transformation.name,
                     key=f"{transformation.id}_name",
                 )
                 title = st.text_input(
-                    "Card Title (this will be the title of all cards created by this transformation). ie 'Key Topics'",
+                    "Tiêu đề (đây sẽ là tiêu đề của tất cả các thẻ được tạo bởi chuyển đổi này). ví dụ 'Chủ đề chính'",
                     transformation.title,
                     key=f"{transformation.id}_title",
                 )
                 description = st.text_area(
-                    "Description (displayed as a hint in the UI so you know what you are selecting)",
+                    "Mô tả (hiển thị như một gợi ý trong giao diện người dùng để bạn biết bạn đang chọn gì)",
                     transformation.description,
                     key=f"{transformation.id}_description",
                 )
@@ -83,43 +84,43 @@ with transformations_tab:
                     key=f"{transformation.id}_prompt",
                     height=300,
                 )
-                st.markdown(
-                    "You can use the prompt to summarize, expand, extract insights and much more. Example: `Translate this text to French`. For inspiration, check out this [great resource](https://github.com/danielmiessler/fabric/tree/main/patterns)."
-                )
+                # st.markdown(
+                #     "You can use the prompt to summarize, expand, extract insights and much more. Example: `Translate this text to French`. For inspiration, check out this [great resource](https://github.com/danielmiessler/fabric/tree/main/patterns)."
+                # )
 
                 apply_default = st.checkbox(
-                    "Suggest by default on new sources",
+                    "Đặt làm mặc định khi thêm mới dữ liệu",
                     transformation.apply_default,
                     key=f"{transformation.id}_apply_default",
                 )
-                if st.button("Save", key=f"{transformation.id}_save"):
+                if st.button("Lưu", key=f"{transformation.id}_save"):
                     transformation.name = name
                     transformation.title = title
                     transformation.description = description
                     transformation.prompt = prompt
                     transformation.apply_default = apply_default
-                    st.toast(f"Transformation '{name}' saved successfully!")
+                    st.toast(f"Lưu thành công prompt '{name}'!")
                     transformation.save()
                     st.rerun()
 
                 if transformation.id:
-                    with st.popover("Other actions"):
+                    with st.popover("Tùy chọn khác"):
                         if st.button(
-                            "Use in Playground",
+                            "Thử nghiệm",
                             icon="🛝",
                             key=f"{transformation.id}_playground",
                         ):
                             st.stop()
                         if st.button(
-                            "Delete", icon="❌", key=f"{transformation.id}_delete"
+                            "Xóa", icon="❌", key=f"{transformation.id}_delete"
                         ):
                             transformation.delete()
                             st.session_state.transformations.remove(transformation)
-                            st.toast(f"Transformation '{name}' deleted successfully!")
+                            st.toast(f"Đã xóa prompt '{transformation.name}'!")
                             st.rerun()
 
 with playground_tab:
-    st.title("🛝 Playground")
+    st.title("🛝 Thử nghiệm")
 
     transformation = st.selectbox(
         "Pick a transformation",

@@ -8,14 +8,22 @@ from pages.components import (
     source_embedding_panel,
     source_insight_panel,
     source_panel,
+    welcome,
 )
-from pages.stream_app.utils import setup_page
+from pages.stream_app.utils import setup_page, hide_header_and_padding
 
 load_dotenv()
-setup_page("📒 Open Notebook", sidebar_state="collapsed")
+
+setup_page("Open Notebook", sidebar_state="collapsed")
+
+# with open( "style.css" ) as css:
+#     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 if "object_id" not in st.query_params:
-    st.switch_page("pages/2_📒_Notebooks.py")
+    # https://notebooklm.google.com/ 
+    # st.switch_page("pages/2_📒_Notebooks.py")
+    # st.stop()
+    welcome()
     st.stop()
 
 object_id = st.query_params["object_id"]

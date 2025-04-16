@@ -1,6 +1,9 @@
 import re
 from datetime import datetime
 from typing import List, Union
+from datetime import datetime
+from zoneinfo import ZoneInfo
+# from pathlib import Path
 
 import streamlit as st
 from loguru import logger
@@ -14,6 +17,38 @@ from open_notebook.utils import (
     get_installed_version,
     get_version_from_github,
 )
+
+# custom css
+# def load_css():
+#     css_path = Path(__file__).parent / "styles.css"
+#     with open(css_path) as f:
+#         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+def convert_to_vn_time(utc_dt: datetime) -> str:
+    vn_dt = utc_dt.astimezone(ZoneInfo("Asia/Ho_Chi_Minh"))
+    return vn_dt.strftime("%H:%M - %d/%m/%Y")
+
+def hide_header_and_padding():
+    """
+    Hides the header and removes padding from the sides of the Streamlit app.
+    """
+    st.markdown(
+        """
+        <style>
+            .block-container {
+                padding-top: 0rem;
+                padding-bottom: 2rem;
+                padding-left: 40px;
+                padding-right: 40px;
+            }   
+            # header {visibility: hidden;}
+            .stAppHeader {
+                display: none;    
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def version_sidebar():
@@ -155,46 +190,57 @@ def setup_page(
     sidebar_state="expanded",
     only_check_mandatory_models=True,
     stop_on_model_error=True,
+    icon = "📒",
 ):
     """Common page setup for all pages"""
     st.set_page_config(
-        page_title=title, layout=layout, initial_sidebar_state=sidebar_state
+        page_title=title, layout=layout, initial_sidebar_state=sidebar_state, page_icon=icon
     )
     check_migration()
     check_models(
         only_mandatory=only_check_mandatory_models, stop_on_error=stop_on_model_error
     )
-    version_sidebar()
+    # version_sidebar()
 
 
-def convert_source_references(text):
+def convert_source_references(text, display=False):
     """
-    Converts source references in brackets to markdown-style links.
+    Converts or removes source references in brackets.
 
     Matches patterns like [source_insight:id], [note:id], [source:id], or [source_embedding:id]
-    and converts them to markdown links.
+    and either removes them or converts them to markdown links.
+    If display=False, also removes any trailing period that follows a reference.
 
     Args:
         text (str): The input text containing source references
+        display (bool, optional): If True, converts references to links; if False, removes them. Defaults to False.
 
     Returns:
-        str: Text with source references converted to markdown links
+        str: Text with source references converted or removed
 
-    Example:
-        >>> text = "Here is a reference [source_insight:abc123]"
-        >>> convert_source_references(text)
-        'Here is a reference [source_insight:abc123](/?object_id=source_insight:abc123)'
+    Examples:
+        >>> text = "Here is a reference [source_insight:abc123]."
+        >>> convert_source_references(text, display=True)
+        'Here is a reference [source_insight:abc123](/?object_id=source_insight:abc123).'
+        >>> convert_source_references(text, display=False)
+        'Here is a reference '
     """
 
     # Pattern matches [type:id] where type can be source_insight, note, source, or source_embedding
-    pattern = r"\[((?:source_insight|note|source|source_embedding):[\w\d]+)\]"
+    # The optional group (\.)? captures a period that might follow the reference
+    pattern = r"\[((?:source_insight|note|source|source_embedding):[\w\d]+)\](\.)?"
 
-    def replace_match(match):
-        """Helper function to create the markdown link"""
-        source_ref = match.group(1)  # Gets the content inside brackets
-        return f"[[{source_ref}]](/?object_id={source_ref})"
+    if display:
+        # Convert to markdown links while preserving any trailing period
+        def replace_match(match):
+            """Helper function to create the markdown link"""
+            source_ref = match.group(1)  # Gets the content inside brackets
+            period = match.group(2) or ""  # Gets the period if it exists, otherwise empty string
+            return f"[[{source_ref}]](/?object_id={source_ref}){period}"
 
-    # Replace all matches in the text
-    converted_text = re.sub(pattern, replace_match, text)
+        converted_text = re.sub(pattern, replace_match, text)
+    else:
+        # Remove references including any trailing period
+        converted_text = re.sub(pattern, "", text)
 
     return converted_text
