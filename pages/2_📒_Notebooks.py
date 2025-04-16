@@ -244,7 +244,7 @@ def notebook_page(current_notebook: Notebook):
                 height: 100%;
                 align-items: center;
                 text-align: -webkit-center;
-                margin-bottom: 48px;
+                # margin-bottom: 48px;
             }
             .st-key-no_notes {
                 display: flex;
@@ -252,7 +252,7 @@ def notebook_page(current_notebook: Notebook):
                 height: 100%;
                 align-items: center;
                 text-align: -webkit-center;
-                margin-bottom: 48px;
+                # margin-bottom: 48px;
             }
             .st-key-header {
                 margin-top: 16px;
