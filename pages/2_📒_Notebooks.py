@@ -416,7 +416,7 @@ st.caption(
 )
 # st.divider()
 
-with st.expander("**+ Tạo sổ mới**"):
+with st.expander("**Tạo sổ mới**", icon=":material/add:"):
     new_notebook_title = st.text_input("Tên sổ", placeholder="Tên sổ mới")
     new_notebook_description = st.text_area(
         "Mô tả",
@@ -437,11 +437,11 @@ for notebook in notebooks:
         continue
     notebook_list_item(notebook)
 
-if len(archived_notebooks) > 0:
-    with st.expander(f"**🗃️ Đã lưu trữ {len(archived_notebooks)} sổ**"):
-        st.write("ℹ️ Sổ đã lưu vẫn có thể sử dụng")
-        for notebook in archived_notebooks:
-            notebook_list_item(notebook)
+# if len(archived_notebooks) > 0:
+#     with st.expander(f"**🗃️ Đã lưu trữ {len(archived_notebooks)} sổ**"):
+#         st.write("ℹ️ Sổ đã lưu vẫn có thể sử dụng")
+#         for notebook in archived_notebooks:
+#             notebook_list_item(notebook)
 
 hide_header_and_padding()
 st.markdown(
