@@ -454,6 +454,8 @@ st.markdown(
                 min-width: 100px;
                 min-height: 40px;
                 border-radius: 4px;
+                color: #CC5F33;
+                border-color: #CC5F33;
             }
             .stVerticalBlockBorderWrapper {
                 border-radius: 4px !important;
