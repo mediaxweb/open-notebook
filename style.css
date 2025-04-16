@@ -4,6 +4,6 @@
     font-family: 'Roboto', sans-serif !important;
 } */
 
-body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]):not([aria-label="attachment icon"]):not([aria-label="face icon"]):not([aria-label="smart_toy icon"]) {
+body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]):not([aria-label="attachment icon"]):not([aria-label="face icon"]):not([aria-label="smart_toy icon"]):not([data-testid="stExpanderIconCheck"]) {
     font-family: 'Roboto', sans-serif !important;
 }
