@@ -378,6 +378,8 @@ def notebook_page(current_notebook: Notebook):
         </style>
         
     """, unsafe_allow_html=True)
+    with open( "style.css" ) as css:
+        st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 def notebook_list_item(notebook):
     with st.container(border=True):
@@ -468,3 +470,5 @@ st.markdown(
         """,
         unsafe_allow_html=True,
     )
+with open( "style.css" ) as css:
+    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)

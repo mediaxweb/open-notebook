@@ -1,8 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
-/* body *  {
-    font-family: 'Roboto', sans-serif !important; 
+/* body *:not([data-testid="stIconMaterial"]) {
+    font-family: 'Roboto', sans-serif !important;
 } */
+
+body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]) {
+    font-family: 'Roboto', sans-serif !important;
+}
+  
+
+
+
+  
 
 /* .stAppViewContainer {
     background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
