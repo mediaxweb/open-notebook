@@ -84,17 +84,18 @@ def chat_sidebar(current_notebook: Notebook, current_session: ChatSession):
             messages = st.session_state[current_session.id]["messages"][::-1]
             if not messages:
                 st.markdown(
-                '<div class="empty-chat" style="height: 100%; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center;">'
+                '<div class="empty-chat" style="gap:18px; height: 100%; justify-content: center; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center;">'
                     '<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11cGxvYWQtaWNvbiBsdWNpZGUtdXBsb2FkIj48cGF0aCBkPSJNMjEgMTV2NGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMnYtNCIvPjxwb2x5bGluZSBwb2ludHM9IjE3IDggMTIgMyA3IDgiLz48bGluZSB4MT0iMTIiIHgyPSIxMiIgeTE9IjMiIHkyPSIxNSIvPjwvc3ZnPg=="' \
                         'alt="No messages"'
                         'width="40" height="40"'
                     '/>'
-                    '<span>Thêm tài nguồn để bắt đầu</span>'
+                    '<span style="font-size: 24px; font-weight: 400;">Thêm nguồn để bắt đầu</span>'
                 '</div>'
                 """
                 <style>
-                    .st-key-chat_tab > :nth-child(2) * {
+                    .st-key-chat_tab > :nth-child(2) *:not(.empty-chat):not(.empty-chat *) {
                         height: 100%;
+                    }
                 </style>
                 """
                 , unsafe_allow_html=True)
