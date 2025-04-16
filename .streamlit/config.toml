@@ -1,6 +1,7 @@
 [server]
 
 port = 8502
+enableStaticServing = true
 maxMessageSize = 500
 
 [browser]
@@ -13,20 +14,20 @@ toolbarMode = "minimal"
 [ui]
 hideTopBar = true
 
-# [theme]
+[theme]
 
 # # The preset Streamlit theme that your custom theme inherits from.
 # # One of "light" or "dark".
 # base =
 
 # # Primary accent color for interactive elements.
-# primaryColor =
+primaryColor = "#CC5F33"
 
 # # Background color for the main content area.
-# backgroundColor =
+# backgroundColor = "#F9F5F4"
 
 # # Background color used for the sidebar and most interactive widgets.
-# secondaryBackgroundColor =
+# secondaryBackgroundColor = "#FCF2F2"
 
 # # Color used for almost all text.
 # textColor =

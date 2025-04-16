@@ -38,8 +38,13 @@ def hide_header_and_padding():
             .block-container {
                 padding-top: 0rem;
                 padding-bottom: 2rem;
+                padding-left: 40px;
+                padding-right: 40px;
             }   
-            header {visibility: hidden;}
+            # header {visibility: hidden;}
+            .stAppHeader {
+                display: none;    
+            }
         </style>
         """,
         unsafe_allow_html=True,

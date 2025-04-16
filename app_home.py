@@ -19,8 +19,6 @@ setup_page("Open Notebook", sidebar_state="collapsed")
 # with open( "style.css" ) as css:
 #     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
-hide_header_and_padding()
-
 if "object_id" not in st.query_params:
     # https://notebooklm.google.com/ 
     # st.switch_page("pages/2_📒_Notebooks.py")

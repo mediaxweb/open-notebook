@@ -54,9 +54,9 @@ def make_note_from_chat(content, notebook_id=None):
 
 def note_card(note, notebook_id):
     if note.note_type == "human":
-        icon = "🤵"
+        icon = ":material/face:"
     else:
-        icon = "🤖"
+        icon = ":material/smart_toy:"
 
     with st.container(border=True):
         st.markdown((f"{icon} **{note.title if note.title else 'No Title'}**"))
@@ -69,7 +69,7 @@ def note_card(note, notebook_id):
         )
         st.caption(f"Ngày tạo: {convert_to_vn_time(note.updated)}")
 
-        if st.button("Xem chi tiết", icon="📝", key=f"edit_note_{note.id}"):
+        if st.button("Xem chi tiết", icon=":material/bookmarks:", key=f"edit_note_{note.id}"):
             note_panel_dialog(notebook_id=notebook_id, note=note)
 
     st.session_state[notebook_id]["context_config"][note.id] = context_state
@@ -86,5 +86,5 @@ def note_list_item(note_id, score=None):
         f"{icon} [{score:.2f}] **{note.title}** {naturaltime(note.updated)}"
     ):
         st.write(note.content)
-        if st.button("Edit Note", icon="📝", key=f"x_edit_note_{note.id}"):
+        if st.button("Edit Note", icon=":material/bookmarks:", key=f"x_edit_note_{note.id}"):
             note_panel_dialog(note=note)

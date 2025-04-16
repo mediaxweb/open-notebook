@@ -113,7 +113,7 @@ def add_source(notebook_id):
 
 def source_card(source, notebook_id):
     # todo: more descriptive icons
-    icon = "🔗"
+    icon = ":material/attachment:"
 
     with st.container(border=True):
         title = (source.title if source.title else "Không có tiêu đề").strip()
@@ -131,7 +131,7 @@ def source_card(source, notebook_id):
         st.caption(
             f"Ngày tạo: {convert_to_vn_time(source.updated)}"
         )
-        if st.button("Xem chi tiết", icon="📝", key=source.id):
+        if st.button("Xem chi tiết", icon=":material/bookmarks:", key=source.id):
             source_panel_dialog(source.id, notebook_id)
 
     st.session_state[notebook_id]["context_config"][source.id] = context_state
@@ -142,7 +142,7 @@ def source_list_item(source_id, score=None):
     if not source:
         st.error("Source not found")
         return
-    icon = "🔗"
+    icon = ":material/attachment:"
 
     with st.expander(
         f"{icon} [{score:.2f}] **{source.title}** {naturaltime(source.updated)}"
