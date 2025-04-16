@@ -8,7 +8,7 @@ from pages.stream_app.source import add_source, source_card
 from pages.stream_app.utils import setup_page, setup_stream_state, hide_header_and_padding, convert_to_vn_time
 from pages.components.header import header
 
-setup_page("Sổ trí tuệ", only_check_mandatory_models=True)
+setup_page("Sổ Trí Tuệ", only_check_mandatory_models=True)
 
 
 

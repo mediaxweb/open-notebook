@@ -4,21 +4,6 @@ from pages.components.header import header
 from streamlit.components.v1 import html
 
 def welcome():
-    
-    
-    # st.title("Sổ trí tuệ")
-
-    # st.html(
-    # "<header style='padding-left: 0px; border-bottom: 1px solid #00000026; height: 80px; display: flex; justify-content: space-between; align-items: center;'>"
-    #     "<div style='display: flex; align-items: center; gap: 11px;'>"
-    #         "<img src='app/static/quoc-huy.png' alt='Logo' style='width: 32px; height: auto;'>"
-    #         "<h1 class='h1'>Sổ trí tuệ</h1>"
-    #     "</div>"
-    #     "<div style='position: relative; width: 592px; height: 100%;'>"
-    #         "<div style='mask-image: linear-gradient(to right, transparent, black 40%, black 60%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 40%, black 60%, transparent); width: 592px; height: 100%; background-image: url(\"app/static/nav-bar-bg.png\"); background-size: cover; opacity: 0.7; background-position-y:78%;'></div>"
-    #     "</div>"
-    # "</header>"
-    # )
     header()
     with st.container(key='kkkkkk'):
         # st.markdown("<div id='main-wrapper'>", unsafe_allow_html=True)
@@ -36,21 +21,21 @@ def welcome():
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11cGxvYWQtaWNvbiBsdWNpZGUtdXBsb2FkIj48cGF0aCBkPSJNMjEgMTV2NGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMnYtNCIvPjxwb2x5bGluZSBwb2ludHM9IjE3IDggMTIgMyA3IDgiLz48bGluZSB4MT0iMTIiIHgyPSIxMiIgeTE9IjMiIHkyPSIxNSIvPjwvc3ZnPg==", width=48)
             st.subheader("Chatbot trợ lý nghiên cứu tài liệu")
-            st.text("Tải lên các tài liệu quan trọng – Trợ lý AI sẽ hỗ trợ trả lời câu hỏi chi tiết cho các nội dung trong tài liệu mà bạn cung cấp.")
+            st.caption("Tải lên các tài liệu quan trọng – Trợ lý AI sẽ hỗ trợ trả lời câu hỏi chi tiết cho các nội dung trong tài liệu mà bạn cung cấp.")
             # st.markdown("</div>", unsafe_allow_html=True)
             
         with col2:
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1tZXNzYWdlLXNxdWFyZS10ZXh0LWljb24gbHVjaWRlLW1lc3NhZ2Utc3F1YXJlLXRleHQiPjxwYXRoIGQ9Ik0yMSAxNWEyIDIgMCAwIDEtMiAySDdsLTQgNFY1YTIgMiAwIDAgMSAyLTJoMTRhMiAyIDAgMCAxIDIgMnoiLz48cGF0aCBkPSJNMTMgOEg3Ii8+PHBhdGggZD0iTTE3IDEySDciLz48L3N2Zz4=", width=48)
             st.subheader("Nắm bắt nhanh nội dung các tài liệu")
-            st.text("Hệ thống giúp chuyển các tài liệu chuyên môn thành dạng dễ hiểu hơn như: Câu hỏi thường gặp, tóm tắt nội dung, thông tin nổi bật.")
+            st.caption("Hệ thống giúp chuyển các tài liệu chuyên môn thành dạng dễ hiểu hơn như: Câu hỏi thường gặp, tóm tắt nội dung, thông tin nổi bật.")
             # st.markdown("</div>", unsafe_allow_html=True)
 
         with col3:
             # st.markdown("<div>", unsafe_allow_html=True)
             st.image("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzVmMzMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2Vycy1pY29uIGx1Y2lkZS11c2VycyI+PHBhdGggZD0iTTE2IDIxdi0yYTQgNCAwIDAgMC00LTRINmE0IDQgMCAwIDAtNCA0djIiLz48Y2lyY2xlIGN4PSI5IiBjeT0iNyIgcj0iNCIvPjxwYXRoIGQ9Ik0yMiAyMXYtMmE0IDQgMCAwIDAtMy0zLjg3Ii8+PHBhdGggZD0iTTE2IDMuMTNhNCA0IDAgMCAxIDAgNy43NSIvPjwvc3ZnPg==", width=48)
             st.subheader("Chia sẻ tri thức trong tổ chức")
-            st.text("Chia sẻ các tài liệu quan trọng trong nội bộ cơ quan để xây dựng kho tri thức dùng chung, nâng cao hiệu quả làm việc và quản lý.")
+            st.caption("Chia sẻ các tài liệu quan trọng trong nội bộ cơ quan để xây dựng kho tri thức dùng chung, nâng cao hiệu quả làm việc và quản lý.")
             # st.markdown("</div>", unsafe_allow_html=True)
         
         if st.button("Tạo sổ mới", type="primary"):
@@ -58,16 +43,6 @@ def welcome():
         
         # st.markdown("</div>", unsafe_allow_html=True)
         
-    # Nút tạo mới
-    # col_center = st.columns([2, 1, 2])[1]
-    # with col_center:
-    #     if st.button("Tạo sổ mới", use_container_width=True, type="primary"):
-    #         st.switch_page("pages/2_📒_Notebooks.py")
-    
-
-        # st.markdown('<div class="centered">', unsafe_allow_html=True)
-        # st.markdown('<a class="link-try" href="#">Dùng thử sổ tay mẫu</a>', unsafe_allow_html=True)
-        # st.markdown('</div>', unsafe_allow_html=True)
 
         hide_header_and_padding()
 
@@ -84,6 +59,11 @@ def welcome():
                 .h1 { 
                     color: #CC5F33 !important;
                 }
+                h3 { 
+                    font-size: 24px !important;
+                    font-weight: 600 !important;
+                }
+
                 .stColumn {
                     text-align: -webkit-center; 
                     background-color: #F7F7F7;
@@ -99,7 +79,7 @@ def welcome():
                     min-height: 48px;
                 }
                 .stVerticalBlock {
-                    gap: 24px;
+                    gap: 32px;
                 }
                 .stHorizontalBlock {
                     max-height: min-content;
