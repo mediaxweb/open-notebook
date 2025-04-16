@@ -1,19 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
-/* body *:not([data-testid="stIconMaterial"]) {
+/* body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]) {
     font-family: 'Roboto', sans-serif !important;
 } */
 
-body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]) {
+body *:not([data-testid="stIconMaterial"]):not([data-testid="stExpanderIcon"]):not([aria-label="attachment icon"]):not([aria-label="face icon"]):not([aria-label="smart_toy icon"]) {
     font-family: 'Roboto', sans-serif !important;
 }
-  
-
-
-
-  
-
-/* .stAppViewContainer {
-    background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-    background-size: cover;
-} */
