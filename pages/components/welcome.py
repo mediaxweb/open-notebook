@@ -60,14 +60,14 @@ def welcome():
                     color: #CC5F33 !important;
                 }
                 h3 { 
-                    font-size: 24px !important;
+                    font-size: 22px !important;
                     font-weight: 600 !important;
                 }
 
                 .stColumn {
                     text-align: -webkit-center; 
                     background-color: #F7F7F7;
-                    padding: 32px 24px 32px 24px;
+                    padding: 28px 20px 28px 20px;
                     border-radius: 16px;
                 }
                 .stButton {
@@ -79,11 +79,11 @@ def welcome():
                     min-height: 48px;
                 }
                 .stVerticalBlock {
-                    gap: 32px;
+                    gap: 28px;
                 }
                 .stHorizontalBlock {
                     max-height: min-content;
-                    gap: 24px;
+                    gap: 20px;
                 }
             </style>
         """, unsafe_allow_html=True)
